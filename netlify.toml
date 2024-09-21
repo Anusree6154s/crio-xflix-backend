@@ -1,4 +1,4 @@
- example netlify.toml
+# example netlify.toml
 [build]
   command = "npm install"
   functions = "netlify/functions"
