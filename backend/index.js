@@ -2,15 +2,18 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const videoRoutes = require("./server");
+const serverless = require("serverless-http");
 
 const app = express();
 const port = process.env.NODE_ENV;
 
 app.use(express.json());
-app.use("/v1/videos", videoRoutes);
-app.get('/', (req, res) => {
-  res.redirect('/v1/videos');
+
+app.get("/", (req, res) => {
+  res.send("App is running..");
 });
+app.use("/v1/videos", videoRoutes);
+// app.use("/.netlify/functions/app", "/v1/videos", videoRoutes);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/xflix")
@@ -22,3 +25,4 @@ app.listen(port, () => {
 });
 
 module.exports = app;
+module.exports.handler = serverless(app);
