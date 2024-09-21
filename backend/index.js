@@ -8,6 +8,9 @@ const port = process.env.NODE_ENV;
 
 app.use(express.json());
 app.use("/v1/videos", videoRoutes);
+app.get('/', (req, res) => {
+  res.redirect('/v1/videos');
+});
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/xflix")
