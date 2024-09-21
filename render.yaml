@@ -2,11 +2,12 @@ services:
   - type: web
     name: xflix-backend
     env: node
-    plan: free      # or 'starter' for paid plans
+    plan: free # or 'starter' for paid plans
     repo: https://gitlab.crio.do/COHORT_ME_BUILDOUT_XFLIX_NODE_ENROLL_1641732453619/anilkumaranusree113-ME_BUILDOUT_XFLIX_NODE.git
-    branch: main    # branch you want to deploy from
+    branch: main # branch you want to deploy from
     buildCommand: "npm install"
     startCommand: "npm start"
     envVars:
       - key: NODE_ENV
         value: production
+    engine: ejs
