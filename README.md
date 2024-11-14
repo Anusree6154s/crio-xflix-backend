@@ -4,7 +4,7 @@
     <p><strong>Backend for XFlix - A video sharing platform</strong></p>
     <p>
       <a href="https://xflix-backend-vmhx.onrender.com/v1/videos">View XFlix Backend</a> •
-      <a href="https://www.postman.com/lunar-module-geoscientist-23775876/xflix-backend-api/collection/6wogu2r/xflix">API Documentation</a>
+      <a href="https://documenter.getpostman.com/view/33572999/2sAY55ZxeS">API Documentation</a>
     </p>
     <img src="https://github.com/user-attachments/assets/922d3a25-a28f-4a20-aa53-b76de376df02" width="700"/>
 </div>
