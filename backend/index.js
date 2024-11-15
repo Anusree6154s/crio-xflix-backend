@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const port = process.env.NODE_ENV;
 
-app.use(cors({ origin: "https://xflix-frontend-hazel.vercel.app/" }));
+app.use(cors({ origin: "https://xflix-frontend-hazel.vercel.app" }));
 app.use(express.json());
 app.get("/", (req, res) => {
   res.redirect("/v1/videos");
