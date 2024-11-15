@@ -28,7 +28,7 @@
 - **Node.js**: For server-side development.
 - **Express.js**: To create RESTful APIs easily.
 - **MongoDB**: For data persistence.
-- **Postman**: For API testing.
+- **Postman**: For API testing and documentation.
 
 ### Features: 
 - RESTful API implementation.
