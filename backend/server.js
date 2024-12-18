@@ -5,8 +5,13 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { videoLink, ...rest } = req.body;
+  const videoParams = videoLink.split("=")[1];
+  
   try {
-    const video = await Video.create({ ...rest, videoLink: videoLink.slice(12) });
+    const video = await Video.create({
+      ...rest,
+      videoLink: "youtube.com/embed/" + videoParams,
+    });
     res.status(201).send(video);
   } catch (error) {
     res.status(400).send({
@@ -23,7 +28,7 @@ router.get("/", async (req, res) => {
 
     if (title) filter.title = new RegExp(title, "i");
     if (genres && genres !== "All") filter.genre = { $in: genres.split(",") };
-    if (contentRating)  filter.contentRating =  decodeURIComponent(contentRating)
+    if (contentRating) filter.contentRating = decodeURIComponent(contentRating);
 
     const sortField =
       sortBy === "viewCount" ? { viewCount: -1 } : { releaseDate: -1 };
