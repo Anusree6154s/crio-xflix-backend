@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   const { videoLink, ...rest } = req.body;
   const videoParams = videoLink.split("=")[1];
-  
+
   try {
     const video = await Video.create({
       ...rest,
