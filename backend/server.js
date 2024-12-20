@@ -1,8 +1,17 @@
 const express = require("express");
 const Video = require("./models/video");
 const { v4: uuidv4 } = require("uuid");
+const path = require("path");
 
 const router = express.Router();
+
+router.get("/docs", async (req, res) => {
+  res.sendFile(path.join(__dirname, "./docs/rapidoc.html"));
+});
+
+router.get("/swagger.json", async (req, res) => {
+  res.sendFile(path.join(__dirname, "./docs/swagger.json"));
+});
 
 router.post("/", async (req, res) => {
   const { videoLink, ...rest } = req.body;

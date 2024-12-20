@@ -1,0 +1,380 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the documentation for XFlix - A Video Sharing Application.\n\n XFlix Backend API allows the users to \n - Fetch all videos \n - Fetch a video by id\n - Add a new video\n- Update views of a video\n- Update votes of a video.\n\nOther links:\n- [XFlix Github](https://github.com/Anusree6154s/xflix-backend)\n- [XFlix Website](https://xflix-frontend-hazel.vercel.app/)",
+    "version": "1.0.7",
+    "title": "XFlix Backend API"
+  },
+  "host": "localhost:8082",
+  "basePath": "/v1/videos",
+  "tags": [
+    {
+      "name": "videos"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["videos"],
+        "summary": "Fetch all videos",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Search by title",
+            "type": "string",
+            "example": "Top"
+          },
+          {
+            "name": "genres",
+            "in": "query",
+            "description": "Filter by genres",
+            "type": "string",
+            "enum": [
+              "Education",
+              "Sports",
+              "Movies",
+              "Comedy",
+              "Lifestyle",
+              "All"
+            ],
+            "example": "Education"
+          },
+          {
+            "name": "contentRating",
+            "in": "query",
+            "description": "Sort by content rating",
+            "type": "string",
+            "enum": ["Anyone", "7+", "12+", "16+", "18+"],
+            "example": "16+"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sort by Release Date or Views",
+            "type": "string",
+            "enum": ["", "viewCount"],
+            "example": "viewCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/VideoResponse200"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/VideoResponse400"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["videos"],
+        "summary": "Add a new video",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Details of video to be added",
+            "required": "true",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "contentRating": {
+                  "type": "string",
+                  "example": "7+"
+                },
+
+                "genre": {
+                  "type": "string",
+                  "example": "Education"
+                },
+
+                "previewImage": {
+                  "type": "string",
+                  "example": "https://i.ytimg.com/vi_webp/hGrRg8aoBMU/sddefault.webp"
+                },
+
+                "releaseDate": {
+                  "type": "string",
+                  "example": "12 Jan 2021"
+                },
+
+                "title": { "type": "string", "example": "Upskill with Crio" },
+
+                "videoLink": {
+                  "type": "string",
+                  "exapmle": "https://www.youtube.com/ watch?v=hGrRg8aoBMU"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "a84cd1a1-077e-41f6-a17a-0b27996b2f03"
+                },
+
+                "videoLink": {
+                  "type": "string",
+                  "example": "youtube.com/embed/undefined"
+                },
+                "title": { "type": "string", "example": "Upskill with Crio" },
+                "genre": { "type": "string", "example": "Education" },
+                "contentRating": { "type": "string", "example": "7+" },
+                "releaseDate": { "type": "string", "example": "12 Jan 2021" },
+                "previewImage": {
+                  "type": "string",
+                  "example": "https://i.ytimg.com/vi_webp/hGrRg8aoBMU/sddefault.webp"
+                },
+                "votes": {
+                  "type": "object",
+                  "properties": {
+                    "upVotes": { "type": "number", "default": 0 },
+                    "downVotes": { "type": "number", "default": 0 }
+                  }
+                },
+                "viewCount": { "type": "number", "default": 0 }
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/VideoResponse400"
+            }
+          }
+        }
+      }
+    },
+    "/{videoId}": {
+      "get": {
+        "tags": ["videos"],
+        "summary": "Fetch video by id",
+        "parameters": [
+          {
+            "name": "videoId",
+            "type": "string",
+            "required": "true",
+            "in": "path",
+            "example": "60331f421f1d093ab542447a"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Video"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid videoId format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/VideoResponse400"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Video not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/VideoResponse404"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{videoId}/votes": {
+      "patch": {
+        "tags": ["videos"],
+        "summary": "Update votes by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "videoId",
+            "example": "60331f421f1d093ab542447a",
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "vote": {
+                  "type": "string",
+                  "enum": ["upVote", "downVote"]
+                },
+                "change": {
+                  "type": "string",
+                  "enum": ["increase", "decrease"]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated Votes",
+            "schema": {
+              "type": "number",
+              "example": 204
+            }
+          },
+          "400": {
+            "description": "Any other error",
+            "schema": {
+              "$ref": "#/definitions/VideoResponse400"
+            }
+          },
+          "404": {
+            "description": "Video not found",
+            "schema": {
+              "$ref": "#/definitions/VideoResponse404"
+            }
+          }
+        }
+      }
+    },
+    "/{videoId}/views": {
+      "patch": {
+        "tags": ["videos"],
+        "summary": "Update views by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "videoId",
+            "example": "60331f421f1d093ab542447a",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Updated Views",
+            "schema": {
+              "type": "number",
+              "example": 204
+            }
+          },
+          "400": {
+            "description": "Any other error",
+            "schema": {
+              "$ref": "#/definitions/VideoResponse400"
+            }
+          },
+          "404": {
+            "description": "Video not found",
+            "schema": {
+              "$ref": "#/definitions/VideoResponse404"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Video": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "videoLink": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string",
+          "enum": [
+            "Education",
+            "Sports",
+            "Movies",
+            "Comedy",
+            "Lifestyle",
+            "All"
+          ]
+        },
+        "contentRating": {
+          "type": "string",
+          "enum": ["Anyone", "7+", "12+", "16+", "18+"]
+        },
+        "releaseDate": {
+          "type": "string"
+        },
+        "previewImage": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "string",
+          "properties": {
+            "upVotes": {
+              "type": "number",
+              "default": 0
+            },
+            "downVotes": {
+              "type": "number",
+              "default": 0
+            }
+          }
+        },
+        "viewCount": {
+          "type": "number",
+          "default": 0
+        }
+      }
+    },
+    "VideoResponse200": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "$ref": "#/definitions/Video"
+        }
+      }
+    },
+    "VideoResponse400": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "VideoResponse404": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
