@@ -1,5 +1,6 @@
 const express = require("express");
 const Video = require("./models/video");
+const { v4: uuidv4 } = require("uuid");
 
 const router = express.Router();
 
@@ -9,6 +10,7 @@ router.post("/", async (req, res) => {
 
   try {
     const video = await Video.create({
+      _id: uuidv4(),
       ...rest,
       videoLink: "youtube.com/embed/" + videoParams,
     });
