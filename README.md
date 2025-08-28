@@ -3,7 +3,7 @@
     <h1 id="title">XFlix Node - Backend</h1>
     <p><strong>Backend for XFlix - A video sharing platform</strong></p>
     <p>
-      <a href="https://xflix-backend-vmhx.onrender.com/v1/videos/docs">Backend API Documentation</a> •
+      <a href="https://crio-xflix-backend.vercel.app/v1/videos/docs">Backend API Documentation</a> •
       <a href="https://github.com/Anusree6154s/xflix-frontend">XFlix Frontend Github</a> •
       <a href="https://xflix-frontend-hazel.vercel.app">XFlix Frontend Website</a>
     </p>
