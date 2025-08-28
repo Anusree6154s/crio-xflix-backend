@@ -5,7 +5,7 @@
     <p>
       <a href="https://xflix-backend-vmhx.onrender.com/v1/videos/docs">Backend API Documentation</a> •
       <a href="https://github.com/Anusree6154s/xflix-frontend">XFlix Frontend Github</a> •
-      <a href="https://github.com/Anusree6154s/xflix-frontend">XFlix Frontend Website</a>
+      <a href="https://xflix-frontend-hazel.vercel.app">XFlix Frontend Website</a>
     </p>
     <img src="https://github.com/user-attachments/assets/922d3a25-a28f-4a20-aa53-b76de376df02" width="700"/>
 </div>
